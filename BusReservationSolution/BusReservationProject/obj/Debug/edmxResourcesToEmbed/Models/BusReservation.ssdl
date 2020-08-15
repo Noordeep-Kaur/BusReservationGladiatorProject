@@ -1,0 +1,342 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BusReservationModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="username" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="password" Type="nvarchar" MaxLength="40" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BusDetails">
+    <Key>
+      <PropertyRef Name="BusID" />
+    </Key>
+    <Property Name="BusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BusNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="DriverID" Type="int" Nullable="false" />
+    <Property Name="DriverPhone" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="BusType" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="NumberOfSeats" Type="int" Nullable="false" />
+    <Property Name="BusAvailability" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DriverDetails">
+    <Key>
+      <PropertyRef Name="DID" />
+    </Key>
+    <Property Name="DID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PhoneNumber" Type="varchar" MaxLength="15" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'BusReservation.dbo.Feedback' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="Feedback">
+    <Key>
+      <PropertyRef Name="PNR" />
+      <PropertyRef Name="JourneyRatings" />
+    </Key>
+    <Property Name="PNR" Type="int" Nullable="false" />
+    <Property Name="JourneyRatings" Type="int" Nullable="false" />
+    <Property Name="Comments" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="GuestUserDetails">
+    <Key>
+      <PropertyRef Name="GID" />
+    </Key>
+    <Property Name="GID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Lastname" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="EmailId" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PhoneNumber" Type="varchar" MaxLength="15" />
+  </EntityType>
+  <EntityType Name="JourneyRoutes">
+    <Key>
+      <PropertyRef Name="RouteID" />
+    </Key>
+    <Property Name="RouteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TripID" Type="int" Nullable="false" />
+    <Property Name="CompanyName" Type="nvarchar" MaxLength="40" />
+    <Property Name="FromLocation" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ToLocation" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="FromDate" Type="date" Nullable="false" />
+    <Property Name="ToDate" Type="date" Nullable="false" />
+    <Property Name="FromTime" Type="time" Precision="7" Nullable="false" />
+    <Property Name="ToTime" Type="time" Precision="7" Nullable="false" />
+    <Property Name="FromDescription" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="ToDescription" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="Fare" Type="int" Nullable="false" />
+    <Property Name="NumberOfSeats" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'BusReservation.dbo.PassengerDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="PassengerDetails">
+    <Key>
+      <PropertyRef Name="PNR" />
+      <PropertyRef Name="PassengerName" />
+      <PropertyRef Name="Gender" />
+      <PropertyRef Name="Age" />
+      <PropertyRef Name="SeatNumber" />
+      <PropertyRef Name="BookingStatus" />
+    </Key>
+    <Property Name="PNR" Type="int" Nullable="false" />
+    <Property Name="PassengerName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Gender" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="Age" Type="int" Nullable="false" />
+    <Property Name="SeatNumber" Type="int" Nullable="false" />
+    <Property Name="BookingStatus" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Ticket">
+    <Key>
+      <PropertyRef Name="TicketID" />
+    </Key>
+    <Property Name="TicketID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BusID" Type="int" Nullable="false" />
+    <Property Name="BookingUserID" Type="int" Nullable="false" />
+    <Property Name="FromLocation" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ToLocation" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="FromDate" Type="date" Nullable="false" />
+    <Property Name="ToDate" Type="date" Nullable="false" />
+    <Property Name="FromTime" Type="time" Precision="7" Nullable="false" />
+    <Property Name="ToTime" Type="time" Precision="7" Nullable="false" />
+    <Property Name="TicketBookingStatus" Type="int" Nullable="false" />
+    <Property Name="NumberOfSeats" Type="int" Nullable="false" />
+    <Property Name="Fare" Type="int" Nullable="false" />
+    <Property Name="PaymentStatus" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TransactionDetails">
+    <Key>
+      <PropertyRef Name="TransactionID" />
+    </Key>
+    <Property Name="TransactionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PNR" Type="int" Nullable="false" />
+    <Property Name="PaymentDate" Type="date" Nullable="false" />
+    <Property Name="PaymentTime" Type="time" Precision="7" Nullable="false" />
+    <Property Name="Amount" Type="int" Nullable="false" />
+    <Property Name="ModeOfPayment" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="PaymentStatus" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Trip">
+    <Key>
+      <PropertyRef Name="TID" />
+    </Key>
+    <Property Name="TID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BusID" Type="int" Nullable="false" />
+    <Property Name="FromLocation" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ToLocation" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserDetails">
+    <Key>
+      <PropertyRef Name="UID" />
+    </Key>
+    <Property Name="UID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="Gender" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="DOB" Type="date" Nullable="false" />
+    <Property Name="Address" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="State" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Pincode" Type="int" Nullable="false" />
+    <Property Name="PhoneNumber" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Wallet" Type="int" Nullable="false" />
+    <Property Name="GuestID" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="fk_BID">
+    <End Role="BusDetails" Type="Self.BusDetails" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BusDetails">
+        <PropertyRef Name="BusID" />
+      </Principal>
+      <Dependent Role="Ticket">
+        <PropertyRef Name="BusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_BookingUserID">
+    <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="1" />
+    <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserDetails">
+        <PropertyRef Name="UID" />
+      </Principal>
+      <Dependent Role="Ticket">
+        <PropertyRef Name="BookingUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_BusID">
+    <End Role="BusDetails" Type="Self.BusDetails" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Trip" Type="Self.Trip" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BusDetails">
+        <PropertyRef Name="BusID" />
+      </Principal>
+      <Dependent Role="Trip">
+        <PropertyRef Name="BusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_DriverID">
+    <End Role="DriverDetails" Type="Self.DriverDetails" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="BusDetails" Type="Self.BusDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DriverDetails">
+        <PropertyRef Name="DID" />
+      </Principal>
+      <Dependent Role="BusDetails">
+        <PropertyRef Name="DriverID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <!--Errors Found During Generation:
+warning 6035: The relationship 'fk_DriverPhone' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="fk_DriverPhone" />-->
+  <Association Name="fk_GuestID">
+    <End Role="GuestUserDetails" Type="Self.GuestUserDetails" Multiplicity="1" />
+    <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GuestUserDetails">
+        <PropertyRef Name="GID" />
+      </Principal>
+      <Dependent Role="UserDetails">
+        <PropertyRef Name="GuestID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_PNR">
+    <End Role="Ticket" Type="Self.Ticket" Multiplicity="1" />
+    <End Role="Feedback" Type="Self.Feedback" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ticket">
+        <PropertyRef Name="TicketID" />
+      </Principal>
+      <Dependent Role="Feedback">
+        <PropertyRef Name="PNR" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Ticket_id">
+    <End Role="Ticket" Type="Self.Ticket" Multiplicity="1" />
+    <End Role="PassengerDetails" Type="Self.PassengerDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ticket">
+        <PropertyRef Name="TicketID" />
+      </Principal>
+      <Dependent Role="PassengerDetails">
+        <PropertyRef Name="PNR" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Ticketid">
+    <End Role="Ticket" Type="Self.Ticket" Multiplicity="1" />
+    <End Role="TransactionDetails" Type="Self.TransactionDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ticket">
+        <PropertyRef Name="TicketID" />
+      </Principal>
+      <Dependent Role="TransactionDetails">
+        <PropertyRef Name="PNR" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_TripID">
+    <End Role="Trip" Type="Self.Trip" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="JourneyRoutes" Type="Self.JourneyRoutes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Trip">
+        <PropertyRef Name="TID" />
+      </Principal>
+      <Dependent Role="JourneyRoutes">
+        <PropertyRef Name="TripID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="proc_UserLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Username" Type="int" Mode="In" />
+    <Parameter Name="Password" Type="nvarchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="BusReservationModelStoreContainer">
+    <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BusDetails" EntityType="Self.BusDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DriverDetails" EntityType="Self.DriverDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GuestUserDetails" EntityType="Self.GuestUserDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="JourneyRoutes" EntityType="Self.JourneyRoutes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TransactionDetails" EntityType="Self.TransactionDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Trip" EntityType="Self.Trip" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Feedback" EntityType="Self.Feedback" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Feedback].[PNR] AS [PNR], 
+    [Feedback].[JourneyRatings] AS [JourneyRatings], 
+    [Feedback].[Comments] AS [Comments]
+    FROM [dbo].[Feedback] AS [Feedback]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="PassengerDetails" EntityType="Self.PassengerDetails" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [PassengerDetails].[PNR] AS [PNR], 
+    [PassengerDetails].[PassengerName] AS [PassengerName], 
+    [PassengerDetails].[Gender] AS [Gender], 
+    [PassengerDetails].[Age] AS [Age], 
+    [PassengerDetails].[SeatNumber] AS [SeatNumber], 
+    [PassengerDetails].[BookingStatus] AS [BookingStatus]
+    FROM [dbo].[PassengerDetails] AS [PassengerDetails]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="fk_BID" Association="Self.fk_BID">
+      <End Role="BusDetails" EntitySet="BusDetails" />
+      <End Role="Ticket" EntitySet="Ticket" />
+    </AssociationSet>
+    <AssociationSet Name="fk_BookingUserID" Association="Self.fk_BookingUserID">
+      <End Role="UserDetails" EntitySet="UserDetails" />
+      <End Role="Ticket" EntitySet="Ticket" />
+    </AssociationSet>
+    <AssociationSet Name="fk_BusID" Association="Self.fk_BusID">
+      <End Role="BusDetails" EntitySet="BusDetails" />
+      <End Role="Trip" EntitySet="Trip" />
+    </AssociationSet>
+    <AssociationSet Name="fk_DriverID" Association="Self.fk_DriverID">
+      <End Role="DriverDetails" EntitySet="DriverDetails" />
+      <End Role="BusDetails" EntitySet="BusDetails" />
+    </AssociationSet>
+    <AssociationSet Name="fk_GuestID" Association="Self.fk_GuestID">
+      <End Role="GuestUserDetails" EntitySet="GuestUserDetails" />
+      <End Role="UserDetails" EntitySet="UserDetails" />
+    </AssociationSet>
+    <AssociationSet Name="fk_PNR" Association="Self.fk_PNR">
+      <End Role="Ticket" EntitySet="Ticket" />
+      <End Role="Feedback" EntitySet="Feedback" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Ticket_id" Association="Self.fk_Ticket_id">
+      <End Role="Ticket" EntitySet="Ticket" />
+      <End Role="PassengerDetails" EntitySet="PassengerDetails" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Ticketid" Association="Self.fk_Ticketid">
+      <End Role="Ticket" EntitySet="Ticket" />
+      <End Role="TransactionDetails" EntitySet="TransactionDetails" />
+    </AssociationSet>
+    <AssociationSet Name="fk_TripID" Association="Self.fk_TripID">
+      <End Role="Trip" EntitySet="Trip" />
+      <End Role="JourneyRoutes" EntitySet="JourneyRoutes" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

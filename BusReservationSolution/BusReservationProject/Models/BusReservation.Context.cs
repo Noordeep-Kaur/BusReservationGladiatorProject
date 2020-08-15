@@ -12,6 +12,8 @@ namespace BusReservationProject.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class BusReservationEntities : DbContext
     {
@@ -37,5 +39,18 @@ namespace BusReservationProject.Models
         public virtual DbSet<UserDetail> UserDetails { get; set; }
         public virtual DbSet<Feedback> Feedbacks { get; set; }
         public virtual DbSet<PassengerDetail> PassengerDetails { get; set; }
+    
+        public virtual int proc_UserLogin(Nullable<int> username, string password)
+        {
+            var usernameParameter = username.HasValue ?
+                new ObjectParameter("Username", username) :
+                new ObjectParameter("Username", typeof(int));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("Password", password) :
+                new ObjectParameter("Password", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("proc_UserLogin", usernameParameter, passwordParameter);
+        }
     }
 }

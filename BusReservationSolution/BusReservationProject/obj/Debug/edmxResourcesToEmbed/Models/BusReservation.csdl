@@ -1,0 +1,338 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BusReservationModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="username" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BusDetail">
+    <Key>
+      <PropertyRef Name="BusID" />
+    </Key>
+    <Property Name="BusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BusNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DriverID" Type="Int32" Nullable="false" />
+    <Property Name="DriverPhone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="BusType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="NumberOfSeats" Type="Int32" Nullable="false" />
+    <Property Name="BusAvailability" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Tickets" Relationship="Self.fk_BID" FromRole="BusDetails" ToRole="Ticket" />
+    <NavigationProperty Name="Trips" Relationship="Self.fk_BusID" FromRole="BusDetails" ToRole="Trip" />
+    <NavigationProperty Name="DriverDetail" Relationship="Self.fk_DriverID" FromRole="BusDetails" ToRole="DriverDetails" />
+  </EntityType>
+  <EntityType Name="DriverDetail">
+    <Key>
+      <PropertyRef Name="DID" />
+    </Key>
+    <Property Name="DID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="BusDetails" Relationship="Self.fk_DriverID" FromRole="DriverDetails" ToRole="BusDetails" />
+  </EntityType>
+  <EntityType Name="GuestUserDetail">
+    <Key>
+      <PropertyRef Name="GID" />
+    </Key>
+    <Property Name="GID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EmailId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="UserDetails" Relationship="Self.fk_GuestID" FromRole="GuestUserDetails" ToRole="UserDetails" />
+  </EntityType>
+  <EntityType Name="JourneyRoute">
+    <Key>
+      <PropertyRef Name="RouteID" />
+    </Key>
+    <Property Name="RouteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TripID" Type="Int32" Nullable="false" />
+    <Property Name="CompanyName" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+    <Property Name="FromLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ToLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FromDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="ToDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="FromTime" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="ToTime" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="FromDescription" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ToDescription" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Fare" Type="Int32" Nullable="false" />
+    <Property Name="NumberOfSeats" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Trip" Relationship="Self.fk_TripID" FromRole="JourneyRoutes" ToRole="Trip" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Ticket">
+    <Key>
+      <PropertyRef Name="TicketID" />
+    </Key>
+    <Property Name="TicketID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BusID" Type="Int32" Nullable="false" />
+    <Property Name="BookingUserID" Type="Int32" Nullable="false" />
+    <Property Name="FromLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ToLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FromDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="ToDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="FromTime" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="ToTime" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="TicketBookingStatus" Type="Int32" Nullable="false" />
+    <Property Name="NumberOfSeats" Type="Int32" Nullable="false" />
+    <Property Name="Fare" Type="Int32" Nullable="false" />
+    <Property Name="PaymentStatus" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="BusDetail" Relationship="Self.fk_BID" FromRole="Ticket" ToRole="BusDetails" />
+    <NavigationProperty Name="UserDetail" Relationship="Self.fk_BookingUserID" FromRole="Ticket" ToRole="UserDetails" />
+    <NavigationProperty Name="Feedbacks" Relationship="Self.fk_PNR" FromRole="Ticket" ToRole="Feedback" />
+    <NavigationProperty Name="PassengerDetails" Relationship="Self.fk_Ticket_id" FromRole="Ticket" ToRole="PassengerDetails" />
+    <NavigationProperty Name="TransactionDetails" Relationship="Self.fk_Ticketid" FromRole="Ticket" ToRole="TransactionDetails" />
+  </EntityType>
+  <EntityType Name="TransactionDetail">
+    <Key>
+      <PropertyRef Name="TransactionID" />
+    </Key>
+    <Property Name="TransactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PNR" Type="Int32" Nullable="false" />
+    <Property Name="PaymentDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="PaymentTime" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="Amount" Type="Int32" Nullable="false" />
+    <Property Name="ModeOfPayment" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PaymentStatus" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Ticket" Relationship="Self.fk_Ticketid" FromRole="TransactionDetails" ToRole="Ticket" />
+  </EntityType>
+  <EntityType Name="Trip">
+    <Key>
+      <PropertyRef Name="TID" />
+    </Key>
+    <Property Name="TID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BusID" Type="Int32" Nullable="false" />
+    <Property Name="FromLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ToLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="BusDetail" Relationship="Self.fk_BusID" FromRole="Trip" ToRole="BusDetails" />
+    <NavigationProperty Name="JourneyRoutes" Relationship="Self.fk_TripID" FromRole="Trip" ToRole="JourneyRoutes" />
+  </EntityType>
+  <EntityType Name="UserDetail">
+    <Key>
+      <PropertyRef Name="UID" />
+    </Key>
+    <Property Name="UID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Password" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Gender" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Pincode" Type="Int32" Nullable="false" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Wallet" Type="Int32" Nullable="false" />
+    <Property Name="GuestID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="GuestUserDetail" Relationship="Self.fk_GuestID" FromRole="UserDetails" ToRole="GuestUserDetails" />
+    <NavigationProperty Name="Tickets" Relationship="Self.fk_BookingUserID" FromRole="UserDetails" ToRole="Ticket" />
+  </EntityType>
+  <EntityType Name="Feedback">
+    <Key>
+      <PropertyRef Name="PNR" />
+      <PropertyRef Name="JourneyRatings" />
+    </Key>
+    <Property Name="PNR" Type="Int32" Nullable="false" />
+    <Property Name="JourneyRatings" Type="Int32" Nullable="false" />
+    <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Ticket" Relationship="Self.fk_PNR" FromRole="Feedback" ToRole="Ticket" />
+  </EntityType>
+  <EntityType Name="PassengerDetail">
+    <Key>
+      <PropertyRef Name="PNR" />
+      <PropertyRef Name="PassengerName" />
+      <PropertyRef Name="Gender" />
+      <PropertyRef Name="Age" />
+      <PropertyRef Name="SeatNumber" />
+      <PropertyRef Name="BookingStatus" />
+    </Key>
+    <Property Name="PNR" Type="Int32" Nullable="false" />
+    <Property Name="PassengerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Gender" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Age" Type="Int32" Nullable="false" />
+    <Property Name="SeatNumber" Type="Int32" Nullable="false" />
+    <Property Name="BookingStatus" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Ticket" Relationship="Self.fk_Ticket_id" FromRole="PassengerDetails" ToRole="Ticket" />
+  </EntityType>
+  <Association Name="fk_BID">
+    <End Role="BusDetails" Type="Self.BusDetail" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BusDetails">
+        <PropertyRef Name="BusID" />
+      </Principal>
+      <Dependent Role="Ticket">
+        <PropertyRef Name="BusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_BusID">
+    <End Role="BusDetails" Type="Self.BusDetail" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Trip" Type="Self.Trip" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BusDetails">
+        <PropertyRef Name="BusID" />
+      </Principal>
+      <Dependent Role="Trip">
+        <PropertyRef Name="BusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_DriverID">
+    <End Role="DriverDetails" Type="Self.DriverDetail" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="BusDetails" Type="Self.BusDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DriverDetails">
+        <PropertyRef Name="DID" />
+      </Principal>
+      <Dependent Role="BusDetails">
+        <PropertyRef Name="DriverID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_GuestID">
+    <End Role="GuestUserDetails" Type="Self.GuestUserDetail" Multiplicity="1" />
+    <End Role="UserDetails" Type="Self.UserDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GuestUserDetails">
+        <PropertyRef Name="GID" />
+      </Principal>
+      <Dependent Role="UserDetails">
+        <PropertyRef Name="GuestID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_TripID">
+    <End Role="Trip" Type="Self.Trip" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="JourneyRoutes" Type="Self.JourneyRoute" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Trip">
+        <PropertyRef Name="TID" />
+      </Principal>
+      <Dependent Role="JourneyRoutes">
+        <PropertyRef Name="TripID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_BookingUserID">
+    <End Role="UserDetails" Type="Self.UserDetail" Multiplicity="1" />
+    <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserDetails">
+        <PropertyRef Name="UID" />
+      </Principal>
+      <Dependent Role="Ticket">
+        <PropertyRef Name="BookingUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_PNR">
+    <End Role="Ticket" Type="Self.Ticket" Multiplicity="1" />
+    <End Role="Feedback" Type="Self.Feedback" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ticket">
+        <PropertyRef Name="TicketID" />
+      </Principal>
+      <Dependent Role="Feedback">
+        <PropertyRef Name="PNR" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Ticket_id">
+    <End Role="Ticket" Type="Self.Ticket" Multiplicity="1" />
+    <End Role="PassengerDetails" Type="Self.PassengerDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ticket">
+        <PropertyRef Name="TicketID" />
+      </Principal>
+      <Dependent Role="PassengerDetails">
+        <PropertyRef Name="PNR" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Ticketid">
+    <End Role="Ticket" Type="Self.Ticket" Multiplicity="1" />
+    <End Role="TransactionDetails" Type="Self.TransactionDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ticket">
+        <PropertyRef Name="TicketID" />
+      </Principal>
+      <Dependent Role="TransactionDetails">
+        <PropertyRef Name="PNR" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BusReservationEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Admins" EntityType="Self.Admin" />
+    <EntitySet Name="BusDetails" EntityType="Self.BusDetail" />
+    <EntitySet Name="DriverDetails" EntityType="Self.DriverDetail" />
+    <EntitySet Name="GuestUserDetails" EntityType="Self.GuestUserDetail" />
+    <EntitySet Name="JourneyRoutes" EntityType="Self.JourneyRoute" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Tickets" EntityType="Self.Ticket" />
+    <EntitySet Name="TransactionDetails" EntityType="Self.TransactionDetail" />
+    <EntitySet Name="Trips" EntityType="Self.Trip" />
+    <EntitySet Name="UserDetails" EntityType="Self.UserDetail" />
+    <EntitySet Name="Feedbacks" EntityType="Self.Feedback" />
+    <EntitySet Name="PassengerDetails" EntityType="Self.PassengerDetail" />
+    <AssociationSet Name="fk_BID" Association="Self.fk_BID">
+      <End Role="BusDetails" EntitySet="BusDetails" />
+      <End Role="Ticket" EntitySet="Tickets" />
+    </AssociationSet>
+    <AssociationSet Name="fk_BusID" Association="Self.fk_BusID">
+      <End Role="BusDetails" EntitySet="BusDetails" />
+      <End Role="Trip" EntitySet="Trips" />
+    </AssociationSet>
+    <AssociationSet Name="fk_DriverID" Association="Self.fk_DriverID">
+      <End Role="DriverDetails" EntitySet="DriverDetails" />
+      <End Role="BusDetails" EntitySet="BusDetails" />
+    </AssociationSet>
+    <AssociationSet Name="fk_GuestID" Association="Self.fk_GuestID">
+      <End Role="GuestUserDetails" EntitySet="GuestUserDetails" />
+      <End Role="UserDetails" EntitySet="UserDetails" />
+    </AssociationSet>
+    <AssociationSet Name="fk_TripID" Association="Self.fk_TripID">
+      <End Role="Trip" EntitySet="Trips" />
+      <End Role="JourneyRoutes" EntitySet="JourneyRoutes" />
+    </AssociationSet>
+    <AssociationSet Name="fk_BookingUserID" Association="Self.fk_BookingUserID">
+      <End Role="UserDetails" EntitySet="UserDetails" />
+      <End Role="Ticket" EntitySet="Tickets" />
+    </AssociationSet>
+    <AssociationSet Name="fk_PNR" Association="Self.fk_PNR">
+      <End Role="Ticket" EntitySet="Tickets" />
+      <End Role="Feedback" EntitySet="Feedbacks" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Ticket_id" Association="Self.fk_Ticket_id">
+      <End Role="Ticket" EntitySet="Tickets" />
+      <End Role="PassengerDetails" EntitySet="PassengerDetails" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Ticketid" Association="Self.fk_Ticketid">
+      <End Role="Ticket" EntitySet="Tickets" />
+      <End Role="TransactionDetails" EntitySet="TransactionDetails" />
+    </AssociationSet>
+    <FunctionImport Name="proc_UserLogin">
+      <Parameter Name="Username" Mode="In" Type="Int32" />
+      <Parameter Name="Password" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+</Schema>
